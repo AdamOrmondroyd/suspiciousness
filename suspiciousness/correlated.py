@@ -20,7 +20,7 @@ def logS(h1, h0, show=False):
 
 @stats
 def logI(h1, h0, show=False):
-    logI = h0.D_KL - h1.D_KL
+    logI = h1.D_KL - h0.D_KL
     if show:
         print(f"logI = {logI.mean()} ± {logI.std()}")
     return logI
