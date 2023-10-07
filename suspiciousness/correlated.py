@@ -1,12 +1,12 @@
 """
-Core functions for suspiciousness.
+Core functions for suspiciousness, for correlated datasets.
 """
 from suspiciousness.utils import stats
 from scipy.stats import chi2
 
 
 @stats
-def logR(a, b, ab, show=False):
+def logR(h1, h0, show=False):
     """
     log Bayes factor for correlated datasets.
 
@@ -14,9 +14,8 @@ def logR(a, b, ab, show=False):
 
     Parameters
     ----------
-    a : dataset A
-    b : dataset B
-    ab : combined dataset AB
+    h1: alternative hypothesis
+    h0: null hypothesis
     show: bool. If True, print the mean and std of logR.
 
     Returns
@@ -24,7 +23,7 @@ def logR(a, b, ab, show=False):
     logR: anesthetic.samples.WeightedLabelledSeries
     """
 
-    logR = ab.logZ - a.logZ - b.logZ
+    logR = h0.logZ - h1.logZ
     logR.name = r"$\log{R}$"
     if show:
         print(f"logR = {logR.mean()} ± {logR.std()}")
@@ -32,7 +31,7 @@ def logR(a, b, ab, show=False):
 
 
 @stats
-def logS(a, b, ab, show=False):
+def logS(h1, h0, show=False):
     """
     log suspiciousness for correlated datasets.
 
@@ -40,16 +39,16 @@ def logS(a, b, ab, show=False):
 
     Parameters
     ----------
-    a : dataset A
-    b : dataset B
-    ab : combined dataset AB
+    h1: alternative hypothesis
+    h0: null hypothesis
     show: bool. If True, print the mean and std of logS.
 
     Returns
     -------
     logS: anesthetic.samples.WeightedLabelledSeries
     """
-    logS = ab.logL_P - a.logL_P - b.logL_P
+
+    logS = h0.logL_P - h1.logL_P
     logS.name = r"$\log{S}$"
     if show:
         print(f"logS = {logS.mean()} ± {logS.std()}")
@@ -57,7 +56,7 @@ def logS(a, b, ab, show=False):
 
 
 @stats
-def logI(a, b, ab, show=False):
+def logI(h1, h0, show=False):
     """
     log information ratio for correlated datasets.
 
@@ -65,23 +64,24 @@ def logI(a, b, ab, show=False):
 
     Parameters
     ----------
-    a : dataset A
-    b : dataset B
-    ab : combined dataset AB
+    h1: alternative hypothesis
+    h0: null hypothesis
     show: bool. If True, print the mean and std of logI.
 
     Returns
     -------
     logI: anesthetic.samples.WeightedLabelledSeries
     """
-    logI = a.D_KL + b.D_KL - ab.D_KL
+
+    logI = h1.D_KL - h0.D_KL
+    logI.name = r"$\log{I}$"
     if show:
         print(f"logI = {logI.mean()} ± {logI.std()}")
     return logI
 
 
 @stats
-def d(a, b, ab, show=False):
+def d(h1, h0, show=False):
     """
     Difference in Bayesian dimensionality between H1 and H0.
 
@@ -97,7 +97,7 @@ def d(a, b, ab, show=False):
     -------
     d: anesthetic.samples.WeightedLabelledSeries
     """
-    d = a.d_G + b.d_G - ab.d_G
+    d = h1.d_G - h0.d_G
     d.name = r"$d$"
     if show:
         print(f"d = {d.mean()} ± {d.std()}")
@@ -105,7 +105,7 @@ def d(a, b, ab, show=False):
 
 
 @stats
-def logp(a, b, ab, show=False):
+def logp(h1, h0, show=False):
     """
     log p-value.
 
@@ -113,17 +113,16 @@ def logp(a, b, ab, show=False):
 
     Parameters
     ----------
-    a : dataset A
-    b : dataset B
-    ab : combined dataset AB
+    h1: alternative hypothesis
+    h0: null hypothesis
     show: bool. If True, print the mean and std of logp.
 
     Returns
     -------
     logp: anesthetic.samples.WeightedLabelledSeries
     """
-    _d = d(a, b, ab)
-    logp = chi2.logsf(_d-2*logS(a, b, ab), _d)
+    _d = d(h1, h0)
+    logp = chi2.logsf(_d-2*logS(h1, h0), _d)
     logp.name = r"$\log{p}$"
     if show:
         print(f"logp = {logp.mean()} ± {logp.std()}")
@@ -131,7 +130,7 @@ def logp(a, b, ab, show=False):
 
 
 @stats
-def p(a, b, ab, show=False):
+def p(h1, h0, show=False):
     """
     p-value.
 
@@ -139,17 +138,16 @@ def p(a, b, ab, show=False):
 
     Parameters
     ----------
-    a : dataset A
-    b : dataset B
-    ab : combined dataset AB
+    h1: alternative hypothesis
+    h0: null hypothesis
     show: bool. If True, print the mean and std of p.
 
     Returns
     -------
     p: anesthetic.samples.WeightedLabelledSeries
     """
-    _d = d(a, b, ab)
-    p = chi2.sf(_d-2*logS(a, b, ab), _d)
+    _d = d(h1, h0)
+    p = chi2.sf(_d-2*logS(h1, h0), _d)
     p.name = r"$p$"
     if show:
         print(f"p = {p.mean()} ± {p.std()}")
