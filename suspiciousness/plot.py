@@ -9,6 +9,8 @@ def sigma8plot(*nestedsamples, ax=None, x="omegam", y="sigma8",
     """
     Create kde from *nestedsamples[x], *nestedsamples[y].
 
+    Parameters
+    ----------
     *nestedsamples: anesthetic.NestedSamples
 
     ax: axis to plot on.
@@ -19,6 +21,10 @@ def sigma8plot(*nestedsamples, ax=None, x="omegam", y="sigma8",
                  are the kwargs for that plot.
 
     **kwargs: kwargs to pass to every plot.
+
+    Returns
+    -------
+    ax: axis with plot.
     """
     if ax is None:
         _, ax = plt.subplots()
@@ -41,7 +47,9 @@ def cornerplot(axes, *nestedsamples, prior=False, plot_kwargs, **kwargs):
     """
     Create corner plot from *nestedsamples.
 
-    axes: Pandas array of axes (output of anesthetic.make_2d_axes)
+    Parameters
+    ----------
+    axes: Pandas array of axes (created by anesthetic.make_2d_axes)
 
     *nestedsamples: anesthetic.NestedSamples
 
@@ -51,6 +59,10 @@ def cornerplot(axes, *nestedsamples, prior=False, plot_kwargs, **kwargs):
                  are the kwargs for that plot.
 
     **kwargs: kwargs to pass to every plot.
+
+    Returns
+    -------
+    axes: Pandas array of axes with plot.
     """
     if prior:
         nestedsamples[0].set_beta(0).plot_2d(axes, alpha=0.25,
