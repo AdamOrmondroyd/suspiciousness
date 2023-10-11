@@ -120,11 +120,10 @@ def logp(a, b, ab, show=False):
 
     Returns
     -------
-    logp: anesthetic.samples.WeightedLabelledSeries
+    logp: np.ndarray
     """
     _d = d(a, b, ab)
     logp = chi2.logsf(_d-2*logS(a, b, ab), _d)
-    logp.name = r"$\log{p}$"
     if show:
         print(f"logp = {logp.mean()} ± {logp.std()}")
     return logp
@@ -146,11 +145,10 @@ def p(a, b, ab, show=False):
 
     Returns
     -------
-    p: anesthetic.samples.WeightedLabelledSeries
+    p: np.ndarray
     """
     _d = d(a, b, ab)
     p = chi2.sf(_d-2*logS(a, b, ab), _d)
-    p.name = r"$p$"
     if show:
         print(f"p = {p.mean()} ± {p.std()}")
     return p

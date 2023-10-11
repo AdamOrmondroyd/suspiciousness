@@ -17,9 +17,9 @@ anesthetic.NestedSamples.stats (which is required to for the calculation),
 or anesthetic.NestedSamples (which is turned into stats),
 or even just a string label + the additional chains argument.
 
-a = ac.read_chains("chains/uniform/act/act_polychord_raw/act")
-b = ac.read_chains("chains/uniform/bao/bao_polychord_raw/bao")
-ab = ac.read_chains("chains/uniform/actbao/actbao_polychord_raw/actbao")
+a = ac.read_chains("chains/uniform/act/act")
+b = ac.read_chains("chains/uniform/bao/bao")
+ab = ac.read_chains("chains/uniform/actbao/actbao")
 
 astats = a.stats()
 bstats = b.stats()
