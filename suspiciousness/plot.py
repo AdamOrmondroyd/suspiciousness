@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import smplotlib
 from suspiciousness.utils import samples
 
 
