@@ -36,7 +36,7 @@ def sigma8plot(*nestedsamples, ax=None, x="omegam", y="sigma8",
 
     if x == "omegam" and y == "sigma8":
         if "xlim" not in plot_kwargs:
-            ax.set(xlim=(0.70, 1.00))
+            ax.set(xlim=(0.18, 0.50))
         if "ylim" not in plot_kwargs:
             ax.set(ylim=(0.70, 1.00))
 
