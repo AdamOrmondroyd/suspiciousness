@@ -1,6 +1,6 @@
 [project]
 name = "suspiciousness"
-version = "0.1.2"
+dynamic = ["version"]
 description = "Quantifying tensions between datasets."
 authors = [{name="Adam Neil Ormondroyd", email="Adam.Ormondroyd@gmail.com"}]
 readme = "README.md"
@@ -8,3 +8,9 @@ dependencies = ["numpy", "scipy", "matplotlib", "anesthetic"]
 
 [project.urls]
 repository = "https://github.com/AdamOrmondroyd/suspiciousness"
+
+[build-system]
+requires = ["setuptools_scm>=8"]
+
+[tool.setuptools_scm]
+version_file = "suspiciousness/_version.py"
