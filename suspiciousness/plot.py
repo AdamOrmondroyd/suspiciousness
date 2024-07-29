@@ -34,9 +34,14 @@ def sigma8plot(*nestedsamples, ax=None, x="omegam", y="sigma8",
             ns_kwargs['label'] = ns.label
         ns.plot.kde_2d(x, y, ax=ax, **ns_kwargs, **kwargs)
 
+    if x == "omegam" and y == "sigma8":
+        if "xlim" not in plot_kwargs:
+            ax.set(xlim=(0.70, 1.00))
+        if "ylim" not in plot_kwargs:
+            ax.set(ylim=(0.70, 1.00))
+
     ax.set(xlabel=nestedsamples[0].get_label(x),
-           ylabel=nestedsamples[0].get_label(y),
-           xlim=(0.18, 0.50), ylim=(0.70, 1.00))
+           ylabel=nestedsamples[0].get_label(y))
     ax.legend()
     return ax
 
