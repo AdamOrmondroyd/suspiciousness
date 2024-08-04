@@ -31,7 +31,7 @@ sus.logR(astats, bstats, abstats)
 sus.logR(a, b, ab)
 sus.logR("act", "bao", "actbao", chains="chains/uniform")
 """
-from _version import __version__
+from suspiciousness._version import __version__
 from suspiciousness.core import logR, logI, logS, logp, p, d
 from suspiciousness import correlated
 from suspiciousness.plot import cornerplot, sigma8plot
